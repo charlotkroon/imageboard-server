@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
+app.get("/data", (request, response) => {
+  response.send("some data");
+});
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
