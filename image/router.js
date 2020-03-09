@@ -1,31 +1,18 @@
-const express = require("express");
+const { Router } = require("express");
 const Image = require("./model");
+const auth = require("../auth/middleware");
 
-const router = express.Router();
-
-async function getImage(request, response, next) {
-  try {
-    const images = await Image.findAll();
-
-    response.send(images);
-  } catch (error) {
-    next(error);
-  }
-}
-
-router.post("/image", async (request, response, next) => {
-  console.log("Is this working?");
-  try {
-    const { url, title } = request.body;
-
-    const image = await Image.create({ url, title });
-
-    response.send(image);
-  } catch (error) {
-    next(error);
-  }
+const router = new Router();
+router.get("/image", (request, response, next) => {
+  Image.findAll()
+    .then(images => response.send(images))
+    .catch(next);
 });
 
-router.get("/image", getImage);
+router.post("/image", auth, (request, response, next) => {
+  Image.create(request.body)
+    .then(image => response.send(image))
+    .catch(next);
+});
 
 module.exports = router;

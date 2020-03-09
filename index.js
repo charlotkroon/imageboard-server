@@ -6,6 +6,7 @@ console.log("hello?!");
 const parserMiddleware = bodyParser.json();
 const imageRouter = require("./image/router");
 const authRouter = require("./auth/router");
+const userRouter = require("./user/router");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -15,6 +16,7 @@ app.use(corsMiddleware);
 app.use(parserMiddleware);
 app.use(imageRouter);
 app.use(authRouter);
+app.use(userRouter);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
